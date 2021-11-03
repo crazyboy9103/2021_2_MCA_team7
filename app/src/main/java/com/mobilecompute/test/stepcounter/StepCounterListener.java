@@ -45,12 +45,12 @@ public class StepCounterListener implements SensorEventListener {
             rate = ((sensorEvent.values[0] - init_count)/elapsed) * 1000 * 60;
 
 
-            if(rate > 120) {
-                vibrator.vibrate(VibrationEffect.createOneShot(500,
-                        VibrationEffect.DEFAULT_AMPLITUDE));
-
-                showToast(String.format("Slow down, %s steps per minute", rate));
-            }
+//            if(rate > 120) {
+//                vibrator.vibrate(VibrationEffect.createOneShot(500,
+//                        VibrationEffect.DEFAULT_AMPLITUDE));
+//
+//                showToast(String.format("Slow down, %s steps per minute", rate));
+//            }
             tvStepRate.setText(rate+"");
         }
     }

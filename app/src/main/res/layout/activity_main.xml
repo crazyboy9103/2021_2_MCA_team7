@@ -28,5 +28,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <ToggleButton
+        android:id="@+id/vibFeedOnOffButton"
+        android:textOn="Turn On Feedback"
+        android:textOff="Turn Off Feedback"
+        android:checked="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

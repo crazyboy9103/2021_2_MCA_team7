@@ -1,4 +1,4 @@
-package com.example.pacemaker;
+package com.mobilecompute.test.stepcounter;
 
 import static android.content.Context.VIBRATOR_SERVICE;
 

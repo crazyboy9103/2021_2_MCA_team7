@@ -1,4 +1,4 @@
-package com.example.pacemaker;
+package com.mobilecompute.test.stepcounter;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,6 +7,8 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+
+import com.mobilecompute.test.stepcounter.R;
 
 public class MainActivity extends AppCompatActivity {
     private static final int ACTIVITY_RECOGNITION_REQUEST_CODE = 34;

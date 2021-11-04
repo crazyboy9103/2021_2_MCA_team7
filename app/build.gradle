@@ -6,7 +6,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "com.example.pacemaker"
+        applicationId "com.mobilecompute.test.stepcounter"
         minSdk 29
         targetSdk 31
         versionCode 1

@@ -1,4 +1,4 @@
-package com.example.pacemaker;
+package com.mobilecompute.test.stepcounter;
 
 import android.content.Context;
 import android.os.Handler;
@@ -9,6 +9,7 @@ import android.widget.Chronometer;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 
 public class Stopwatch {
     Context context;

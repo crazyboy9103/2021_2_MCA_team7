@@ -19,7 +19,7 @@ public class StepCounterListener implements SensorEventListener {
     public int step_count = 0;
     private long init_time = 0;
     private long elps = 0;
-    private int rate;
+    private int cadence;
 
     private SensorManager sensorManager;
     private Sensor mStepDetector;
@@ -48,9 +48,6 @@ public class StepCounterListener implements SensorEventListener {
     public void onSensorChanged(SensorEvent sensorEvent) {
         if(sensorEvent.sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
             step_count++;
-            elps = (System.currentTimeMillis() - init_time);
-            rate = (int) (step_count * 60 / (elps/1000));
-            tvStepRate.setText(rate + "");
         }
     }
 
@@ -61,7 +58,6 @@ public class StepCounterListener implements SensorEventListener {
 
     public void pauseSensor() {
         sensorManager.unregisterListener(this);
-        tvStepRate.setText("Running Paused");
     }
 
     public void startSensor() {

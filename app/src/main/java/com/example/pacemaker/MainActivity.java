@@ -7,15 +7,12 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private static final int ACTIVITY_RECOGNITION_REQUEST_CODE = 34;
-    private TextView textViewStepRate;
     StepCounterListener listener;
     Stopwatch stopwatch;
-    Thread cadenceCalculator;
+    VibrationFeedback vibrator;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,36 +22,14 @@ public class MainActivity extends AppCompatActivity {
         initViews();
         initSensors();
 
-        /*
-
-        cadenceCalculator = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    while (!isInterrupted()) {
-                        Thread.sleep(6000);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                textViewStepRate.setText("Current cadence: " + (listener.step_count * 10));
-                                listener.step_count = 0;
-                            }
-                        });
-                    }
-                } catch (InterruptedException e) {}
-            }
-        };
-        */
-
     }
 
-    private void initViews() {
-        textViewStepRate = findViewById(R.id.tvStepRate);
-    }
+    private void initViews() {}
 
     private void initSensors(){
         listener = new StepCounterListener(this);
-        stopwatch = new Stopwatch(this, listener);
+        vibrator = new VibrationFeedback(this);
+        stopwatch = new Stopwatch(this, listener, vibrator);
     }
 
 
@@ -75,9 +50,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void requestPermissions() {
         ActivityCompat.requestPermissions(MainActivity.this,
-                new String[]{Manifest.permission.ACTIVITY_RECOGNITION},
+                new String[]{Manifest.permission.ACTIVITY_RECOGNITION, Manifest.permission.VIBRATE},
                 ACTIVITY_RECOGNITION_REQUEST_CODE);
     }
 
 
 }
+
+

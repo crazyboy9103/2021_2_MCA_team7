@@ -1,6 +1,5 @@
 package com.example.pacemaker;
 
-import static android.content.Context.SENSOR_SERVICE;
 import static android.content.Context.VIBRATOR_SERVICE;
 
 import android.content.Context;

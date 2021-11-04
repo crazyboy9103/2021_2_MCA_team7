@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Stopwatch {
     Context context;
     StepCounterListener listener;
+    CadenceLPFEstimator cadenceLPFEstimator;
     VibrationFeedback vibrator;
     Chronometer chronometer;
     boolean running = false;
@@ -26,9 +27,10 @@ public class Stopwatch {
     private int mInterval = 1000;
     private int cadence;
 
-    public Stopwatch(Context context, StepCounterListener listener, VibrationFeedback vibrator) {
+    public Stopwatch(Context context, StepCounterListener listener, CadenceLPFEstimator cadenceLPFEstimator, VibrationFeedback vibrator) {
         this.context = context;
         this.listener = listener;
+        this.cadenceLPFEstimator = cadenceLPFEstimator;
         this.vibrator = vibrator;
 
         startButton = (Button) ((AppCompatActivity)context).findViewById(R.id.start_pause_button);
@@ -63,9 +65,9 @@ public class Stopwatch {
     }
 
     protected  void updateStatus() {
-        long elps = SystemClock.elapsedRealtime() - chronometer.getBase();
-        cadence = (int) (listener.step_count * 60 * 1000 / elps);
-        tvStepRate.setText(cadence+ "");
+        cadence = (int) cadenceLPFEstimator.cadence;
+
+        tvStepRate.setText(String.valueOf(cadence));
         vibrator.feedback(cadence);
     }
 
@@ -73,6 +75,7 @@ public class Stopwatch {
         if (!running) {
             chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
             listener.startSensor();
+            cadenceLPFEstimator.reset();
             chronometer.start();
             running = true;
             feedbackLoop.run();

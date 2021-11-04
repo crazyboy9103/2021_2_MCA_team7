@@ -13,6 +13,7 @@ import com.mobilecompute.test.stepcounter.R;
 public class MainActivity extends AppCompatActivity {
     private static final int ACTIVITY_RECOGNITION_REQUEST_CODE = 34;
     StepCounterListener listener;
+    CadenceLPFEstimator cadenceLPFEstimator;
     Stopwatch stopwatch;
     VibrationFeedback vibrator;
 
@@ -29,9 +30,10 @@ public class MainActivity extends AppCompatActivity {
     private void initViews() {}
 
     private void initSensors(){
-        listener = new StepCounterListener(this);
+        cadenceLPFEstimator = new CadenceLPFEstimator(0.5F);
+        listener = new StepCounterListener(this, cadenceLPFEstimator);
         vibrator = new VibrationFeedback(this);
-        stopwatch = new Stopwatch(this, listener, vibrator);
+        stopwatch = new Stopwatch(this, listener, cadenceLPFEstimator, vibrator);
     }
 
 

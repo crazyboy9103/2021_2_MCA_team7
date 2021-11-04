@@ -1,57 +1,53 @@
 package com.mobilecompute.test.stepcounter;
 
+import static android.content.Context.SENSOR_SERVICE;
+
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import android.os.Build;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
-import androidx.annotation.RequiresApi;
+import android.hardware.SensorManager;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class StepCounterListener implements SensorEventListener {
-    final static String TAG = StepCounterListener.class.getName();
     Context context;
-    TextView tvStepRate;
-    int init_count = 0;
-    long init_time = 0;
-    long elapsed = 0;
-    float rate = 0;
-    Vibrator vibrator;
-    boolean init_checked = false;
+    TextView tvStepRate, textDetectorExists;
+    public int step_count = 0;
+    private long init_time = 0;
+    private long elps = 0;
+    private int cadence;
+
+    private SensorManager sensorManager;
+    private Sensor mStepDetector;
+
     public StepCounterListener(Context context){
         this.context=context;
-        vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         tvStepRate = (TextView) ((AppCompatActivity)context).findViewById(R.id.tvStepRate);
+        textDetectorExists = (TextView) ((AppCompatActivity)context).findViewById(R.id.tvDetectorExists);
+
+        initSensors();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void initSensors(){
+        sensorManager = (SensorManager) context.getSystemService(SENSOR_SERVICE);
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR) != null) {
+            mStepDetector = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
+            textDetectorExists.setText("Sensor Detected");
+        } else {
+            Toast.makeText(context, "No step detector", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        if(sensorEvent.sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
-            if (!init_checked) {
-                if((int)sensorEvent.values[0] != 0){
-                    init_count =(int)sensorEvent.values[0];
-                }
-                init_time = System.currentTimeMillis();
-                init_checked = true;
-            }
-
-            elapsed = (System.currentTimeMillis()-init_time);
-
-            rate = ((sensorEvent.values[0] - init_count)/elapsed) * 1000 * 60;
-
-
-//            if(rate > 120) {
-//                vibrator.vibrate(VibrationEffect.createOneShot(500,
-//                        VibrationEffect.DEFAULT_AMPLITUDE));
-//
-//                showToast(String.format("Slow down, %s steps per minute", rate));
-//            }
-            tvStepRate.setText(rate+"");
+        if(sensorEvent.sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
+            step_count++;
         }
     }
 
@@ -60,8 +56,12 @@ public class StepCounterListener implements SensorEventListener {
 
     }
 
-    public void showToast(String text){
-        Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+    public void pauseSensor() {
+        sensorManager.unregisterListener(this);
+    }
 
+    public void startSensor() {
+        sensorManager.registerListener(this, mStepDetector, SensorManager.SENSOR_DELAY_NORMAL);
+        init_time = System.currentTimeMillis();
     }
 }

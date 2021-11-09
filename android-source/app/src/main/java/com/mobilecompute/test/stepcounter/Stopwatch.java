@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Stopwatch {
     Context context;
     StepCounterListener listener;
+    CadenceLPFEstimator cadenceLPFEstimator;
+    CadenceKFEstimator cadenceKFEstimator;
     VibrationFeedback vibrator;
     Chronometer chronometer;
     boolean running = false;
@@ -21,20 +23,26 @@ public class Stopwatch {
     Button startButton, resetButton;
     private Handler mHandler;
     Runnable feedbackLoop;
-    TextView tvStepRate;
+    TextView tvStepRateLPF;
+    TextView tvStepRateKF;
 
     private int mInterval = 1000;
-    private int cadence;
 
-    public Stopwatch(Context context, StepCounterListener listener, VibrationFeedback vibrator) {
+    public Stopwatch(Context context, StepCounterListener listener,
+                     CadenceLPFEstimator cadenceLPFEstimator,
+                     CadenceKFEstimator cadenceKFEstimator,
+                     VibrationFeedback vibrator) {
         this.context = context;
         this.listener = listener;
+        this.cadenceLPFEstimator = cadenceLPFEstimator;
+        this.cadenceKFEstimator = cadenceKFEstimator;
         this.vibrator = vibrator;
 
-        startButton = (Button) ((AppCompatActivity)context).findViewById(R.id.start_pause_button);
-        resetButton = (Button) ((AppCompatActivity)context).findViewById(R.id.resetButton);
-        chronometer = (Chronometer) ((AppCompatActivity)context).findViewById(R.id.chronometer);
-        tvStepRate = (TextView) ((AppCompatActivity)context).findViewById(R.id.tvStepRate);
+        startButton = (Button) ((AppCompatActivity) context).findViewById(R.id.start_pause_button);
+        resetButton = (Button) ((AppCompatActivity) context).findViewById(R.id.resetButton);
+        chronometer = (Chronometer) ((AppCompatActivity) context).findViewById(R.id.chronometer);
+        tvStepRateLPF = (TextView) ((AppCompatActivity) context).findViewById(R.id.tvStepRateLPF);
+        tvStepRateKF = (TextView) ((AppCompatActivity) context).findViewById(R.id.tvStepRateKF);
 
         startButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -62,17 +70,21 @@ public class Stopwatch {
         };
     }
 
-    protected  void updateStatus() {
-        long elps = SystemClock.elapsedRealtime() - chronometer.getBase();
-        cadence = (int) (listener.step_count * 60 * 1000 / elps);
-        tvStepRate.setText(cadence+ "");
-        vibrator.feedback(cadence);
+    protected void updateStatus() {
+        double cadenceLPF = cadenceLPFEstimator.cadence;
+        double cadenceKF = cadenceKFEstimator.cadence;
+
+        tvStepRateLPF.setText(String.valueOf((int) cadenceLPF));
+        tvStepRateKF.setText(String.valueOf((int) cadenceKF));
+        vibrator.feedback((int) cadenceKF);
     }
 
     public void startTimer(View v) {
         if (!running) {
             chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
             listener.startSensor();
+            cadenceLPFEstimator.reset();
+            cadenceKFEstimator.reset();
             chronometer.start();
             running = true;
             feedbackLoop.run();
@@ -92,16 +104,15 @@ public class Stopwatch {
     public void resetTimer(View v) {
         chronometer.setBase(SystemClock.elapsedRealtime());
         pauseOffset = 0;
-        listener.step_count = 0;
-        tvStepRate.setText(0+"");
+        listener.stepCount = 0;
+        tvStepRateLPF.setText(0 + "");
     }
 
     public void onToggleClicked(View view) {
         if (!running) {
             startTimer(view);
             startButton.setText("Pause");
-        }
-        else {
+        } else {
             pauseTimer(view);
             startButton.setText("Start");
         }

@@ -10,25 +10,26 @@ import android.hardware.SensorManager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.SystemClock;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class StepCounterListener implements SensorEventListener {
     Context context;
     TextView tvStepRate, textDetectorExists;
-    public int step_count = 0;
+    public int stepCount = 0;
 
     CadenceLPFEstimator cadenceLPFEstimator;
+    CadenceKFEstimator cadenceKFEstimator;
 
     private SensorManager sensorManager;
     private Sensor mStepDetector;
 
-    public StepCounterListener(Context context, CadenceLPFEstimator cadenceLPFEstimator){
+    public StepCounterListener(Context context, CadenceLPFEstimator cadenceLPFEstimator, CadenceKFEstimator cadenceKFEstimator){
         this.context=context;
         this.cadenceLPFEstimator = cadenceLPFEstimator;
+        this.cadenceKFEstimator = cadenceKFEstimator;
 
-        tvStepRate = (TextView) ((AppCompatActivity)context).findViewById(R.id.tvStepRate);
+        tvStepRate = (TextView) ((AppCompatActivity)context).findViewById(R.id.tvStepRateLPF);
         textDetectorExists = (TextView) ((AppCompatActivity)context).findViewById(R.id.tvDetectorExists);
 
         initSensors();
@@ -49,8 +50,9 @@ public class StepCounterListener implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if(sensorEvent.sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
-            step_count++;
+            stepCount++;
             cadenceLPFEstimator.update(SystemClock.elapsedRealtime());
+            cadenceKFEstimator.update(SystemClock.elapsedRealtime());
         }
     }
 
@@ -66,5 +68,6 @@ public class StepCounterListener implements SensorEventListener {
     public void startSensor() {
         sensorManager.registerListener(this, mStepDetector, SensorManager.SENSOR_DELAY_NORMAL);
         cadenceLPFEstimator.reset();
+        cadenceKFEstimator.reset();
     }
 }

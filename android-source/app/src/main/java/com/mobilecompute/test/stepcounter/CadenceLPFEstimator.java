@@ -2,7 +2,6 @@ package com.mobilecompute.test.stepcounter;
 
 import java.lang.Math;
 
-
 public class CadenceLPFEstimator {
     // Cadence estimator using a low-pass filter
     float timeStamp;

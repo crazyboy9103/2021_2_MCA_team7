@@ -9,19 +9,34 @@
     android:gravity="center_horizontal">
 
     <TextView
-        android:id="@+id/tvTitle"
+        android:id="@+id/tvTitleLPF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="Cadence:"
-        android:textSize="30sp" />
+        android:text="Cadence (Low pass filter):"
+        android:textSize="28sp" />
 
     <TextView
-        android:id="@+id/tvStepRate"
+        android:id="@+id/tvStepRateLPF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
-        android:textSize="25sp" />
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/tvTitleKF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Cadence (Kalman filter):"
+        android:textSize="28sp" />
+
+    <TextView
+        android:id="@+id/tvStepRateKF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/tvDetectorExists"

@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int ACTIVITY_RECOGNITION_REQUEST_CODE = 34;
     StepCounterListener listener;
     CadenceLPFEstimator cadenceLPFEstimator;
+    CadenceKFEstimator cadenceKFEstimator;
     Stopwatch stopwatch;
     VibrationFeedback vibrator;
 
@@ -31,9 +32,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void initSensors(){
         cadenceLPFEstimator = new CadenceLPFEstimator(0.5F);
-        listener = new StepCounterListener(this, cadenceLPFEstimator);
+        cadenceKFEstimator = new CadenceKFEstimator();
+        listener = new StepCounterListener(this, cadenceLPFEstimator, cadenceKFEstimator);
         vibrator = new VibrationFeedback(this);
-        stopwatch = new Stopwatch(this, listener, cadenceLPFEstimator, vibrator);
+        stopwatch = new Stopwatch(this, listener, cadenceLPFEstimator, cadenceKFEstimator, vibrator);
     }
 
 

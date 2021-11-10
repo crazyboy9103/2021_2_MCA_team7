@@ -22,6 +22,10 @@ public class CadenceKFEstimator {
         reset();
     }
 
+    public double getCadence(){
+        return Math.max(cadence, 0);
+    }
+
     public void reset(){
         x = new ArrayRealVector(new double[] {0, 0});
         P = new Array2DRowRealMatrix(new double[][]{

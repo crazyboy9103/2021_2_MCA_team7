@@ -15,8 +15,12 @@ public class MainActivity extends AppCompatActivity {
     StepCounterListener listener;
     CadenceLPFEstimator cadenceLPFEstimator;
     CadenceKFEstimator cadenceKFEstimator;
+    PaceEstimator paceEstimator;
     Stopwatch stopwatch;
+    Stopwatch2 stopwatch2;
     VibrationFeedback vibrator;
+    VoiceFeedback voice;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,9 +37,13 @@ public class MainActivity extends AppCompatActivity {
     private void initSensors(){
         cadenceLPFEstimator = new CadenceLPFEstimator(0.5F);
         cadenceKFEstimator = new CadenceKFEstimator();
+        paceEstimator = new PaceEstimator(this);
         listener = new StepCounterListener(this, cadenceLPFEstimator, cadenceKFEstimator);
         vibrator = new VibrationFeedback(this);
+        voice = new VoiceFeedback(this);
         stopwatch = new Stopwatch(this, listener, cadenceLPFEstimator, cadenceKFEstimator, vibrator);
+        stopwatch2 = new Stopwatch2(this, paceEstimator, voice);
+
     }
 
 
@@ -48,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // YSKIM: checkPermissions 는 "ACTIVITY_RECOGNITION" 에 대해서만 하고, 권한 부여는 진동이나 위치에 대한 거를 한꺼번에 다하는듯??
     private boolean checkPermissions() {
         int permissionState = ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACTIVITY_RECOGNITION);
@@ -56,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void requestPermissions() {
         ActivityCompat.requestPermissions(MainActivity.this,
-                new String[]{Manifest.permission.ACTIVITY_RECOGNITION, Manifest.permission.VIBRATE},
+                new String[]{Manifest.permission.ACTIVITY_RECOGNITION, Manifest.permission.VIBRATE, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
                 ACTIVITY_RECOGNITION_REQUEST_CODE);
     }
 

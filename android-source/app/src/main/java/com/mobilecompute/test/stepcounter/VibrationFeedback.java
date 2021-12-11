@@ -14,8 +14,8 @@ public class VibrationFeedback {
     final long[] goSlowerPattern = new long[] {500,1000};
     final int repeat = -1;
 
-    final static int OPTIMAL_CADENCE = 120;
-    final static int CADENCE_MARGIN = 30;
+    final static int OPTIMAL_CADENCE = 180;
+    final static int CADENCE_MARGIN = 5;
     final static int TOO_FAST_CADENCE = OPTIMAL_CADENCE + CADENCE_MARGIN;
     final static int TOO_SLOW_CADENCE = OPTIMAL_CADENCE - CADENCE_MARGIN;
 

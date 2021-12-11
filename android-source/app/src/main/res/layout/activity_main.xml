@@ -12,38 +12,38 @@
         android:id="@+id/tvTitleLPF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
         android:text="Cadence (Low pass filter):"
-        android:textSize="28sp" />
+        android:textSize="10sp" />
 
     <TextView
         android:id="@+id/tvStepRateLPF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
-        android:textSize="24sp" />
+        android:textSize="10sp" />
 
     <TextView
         android:id="@+id/tvTitleKF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
         android:text="Cadence (Kalman filter):"
-        android:textSize="28sp" />
+        android:textSize="10sp" />
 
     <TextView
         android:id="@+id/tvStepRateKF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
-        android:textSize="24sp" />
+        android:textSize="10sp" />
 
     <TextView
         android:id="@+id/tvDetectorExists"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sensors Not Detected"
-        android:textSize="15sp"/>
+        android:textSize="10sp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -76,6 +76,208 @@
         android:layout_height="wrap_content"
         android:textSize="30sp"/>
 
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle">
 
+        <TextView
+            android:id="@+id/tvGpsEnableLabel"
+            android:layout_gravity="right"
+            android:text="GPS Enable "
+            android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/tvGpsEnable"
+            android:text=":"
+            android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/tvGetSpeedLabel"
+            android:layout_gravity="right"
+            android:text="Get Speed "
+            android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/tvGetSpeed"
+            android:text=":"
+            android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/tvCalSpeedLabel"
+            android:layout_gravity="right"
+            android:text="Cal Speed "
+            android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/tvCalSpeed"
+            android:text=":"
+            android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/tvTimeLabel"
+            android:layout_gravity="right"
+            android:text="Time "
+            android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:text=":"
+            android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/tvLastTimeLabel"
+            android:layout_gravity="right"
+            android:text="Last Time "
+            android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/tvLastTime"
+            android:text=":"
+            android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/tvTimeDifLabel"
+            android:layout_gravity="right"
+            android:text="시간 간격 "
+            android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/tvTimeDif"
+            android:text=":"
+            android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/tvDistDifLabel"
+            android:layout_gravity="right"
+            android:text="거리 간격 "
+            android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/tvDistDif"
+            android:text=":"
+            android:textSize="10dp" />
+    </GridLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/target_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="목표 거리 (km 단위)" />
+
+        <EditText
+            android:id="@+id/target_distance_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="5"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/target_distance_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="target_distance_Click"
+            android:text="목표 거리 입력" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/target_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="목표 시간 (분 단위)" />
+
+        <EditText
+            android:id="@+id/target_time_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="5"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/target_time_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="target_time_Click"
+            android:text="목표 시간 입력" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/start_pause_button2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:layout_weight="1"
+            android:text="Start"
+            />
+
+        <Button
+            android:id="@+id/resetButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:layout_weight="1"
+            android:text="Reset" />
+    </LinearLayout>
+
+    <Chronometer
+        android:id="@+id/chronometer2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"/>
+
+    <TextView
+        android:id="@+id/target_paceTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Target Pace:"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/target_pace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/current_paceTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Current Pace:"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/current_pace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="10sp" />
 
 </LinearLayout>

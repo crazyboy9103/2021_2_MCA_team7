@@ -13,6 +13,10 @@ public class CadenceLPFEstimator {
         this.beta = beta;
     }
 
+    public float getCadence(){
+        return cadence;
+    }
+
     public void reset(){
         cadence = 0.0F;
         initialized = false;

@@ -71,8 +71,8 @@ public class Stopwatch {
     }
 
     protected void updateStatus() {
-        double cadenceLPF = cadenceLPFEstimator.cadence;
-        double cadenceKF = cadenceKFEstimator.cadence;
+        double cadenceLPF = cadenceLPFEstimator.getCadence();
+        double cadenceKF = cadenceKFEstimator.getCadence();
 
         tvStepRateLPF.setText(String.valueOf((int) cadenceLPF));
         tvStepRateKF.setText(String.valueOf((int) cadenceKF));
@@ -85,6 +85,8 @@ public class Stopwatch {
             listener.startSensor();
             cadenceLPFEstimator.reset();
             cadenceKFEstimator.reset();
+            tvStepRateLPF.setText("0");
+            tvStepRateKF.setText("0");
             chronometer.start();
             running = true;
             feedbackLoop.run();
@@ -105,7 +107,8 @@ public class Stopwatch {
         chronometer.setBase(SystemClock.elapsedRealtime());
         pauseOffset = 0;
         listener.stepCount = 0;
-        tvStepRateLPF.setText(0 + "");
+        tvStepRateLPF.setText("0");
+        tvStepRateKF.setText("0");
     }
 
     public void onToggleClicked(View view) {

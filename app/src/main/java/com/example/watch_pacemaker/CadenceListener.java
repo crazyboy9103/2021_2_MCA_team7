@@ -1,4 +1,5 @@
-package com.example.pacemaker;
+package com.example.watch_pacemaker;
+
 
 import static android.content.Context.SENSOR_SERVICE;
 
@@ -9,10 +10,11 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
 import android.os.SystemClock;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.pacemaker.databinding.ActivityMainBinding;
+import com.example.watch_pacemaker.databinding.ActivityMainBinding;
 
 public class CadenceListener implements SensorEventListener {
     Context context;
@@ -42,8 +44,10 @@ public class CadenceListener implements SensorEventListener {
         if (sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR) != null) {
             mStepDetector = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
             textDetectorExists.setText("Sensors Detected");
+            Log.i("Steprate Listener", "Found");
         } else {
-            Toast.makeText(context, "No step detector", Toast.LENGTH_SHORT).show();
+            textDetectorExists.setText("Sensors not detected");
+            Log.i("Steprate Listener", "Not found");
         }
 
     }
@@ -53,6 +57,7 @@ public class CadenceListener implements SensorEventListener {
         if(sensorEvent.sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
             stepCount++;
             cadenceEstimator.update(SystemClock.elapsedRealtime());
+            Log.i("StepListener", "stepcount: "+stepCount);
         }
     }
 

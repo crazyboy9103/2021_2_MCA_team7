@@ -1,4 +1,4 @@
-package com.example.pacemaker;
+package com.example.watch_pacemaker;
 
 
 import android.content.Context;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import androidx.core.app.ActivityCompat;
 
-import com.example.pacemaker.databinding.ActivityMainBinding;
+import com.example.watch_pacemaker.databinding.ActivityMainBinding;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

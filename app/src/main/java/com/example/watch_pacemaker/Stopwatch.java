@@ -1,4 +1,5 @@
-package com.example.pacemaker;
+package com.example.watch_pacemaker;
+
 
 
 import android.content.Context;
@@ -9,7 +10,7 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
-import com.example.pacemaker.databinding.ActivityMainBinding;
+import com.example.watch_pacemaker.databinding.ActivityMainBinding;
 
 
 public class Stopwatch {
@@ -19,6 +20,7 @@ public class Stopwatch {
     VoiceFeedback voice;
     PaceEstimator paceEstimator;
     CadenceListener listener;
+    VibrationFeedback vibrationFeedback;
 
 
     boolean running = false;
@@ -30,19 +32,21 @@ public class Stopwatch {
     private Handler mHandler;
     Runnable feedbackLoop;
 
-    final private int mInterval = 1000;
+    final private int mInterval = 2000;
 
     public Stopwatch(Context context,
                      ActivityMainBinding binding,
                      CadenceListener listener,
                      PaceEstimator paceEstimator,
-                     VoiceFeedback voice
-        ) {
+                     VoiceFeedback voice,
+                     VibrationFeedback vibrationFeedback
+    ) {
         this.context = context;
         this.binding = binding;
         this.voice = voice;
         this.paceEstimator = paceEstimator;
         this.listener = listener;
+        this.vibrationFeedback = vibrationFeedback;
 
         startButton = binding.startPauseButton;
         resetButton = binding.resetButton;
@@ -82,10 +86,9 @@ public class Stopwatch {
         double cadence = listener.cadenceEstimator.getCadence();
         double pace = paceEstimator.getPace();
 
-        //current_pace.setText(String.valueOf(pace));
         current_cadence.setText("Cadence: " + cadence);
-
         voice.feedback(pace);
+        vibrationFeedback.feedback((int)cadence);
     }
 
 

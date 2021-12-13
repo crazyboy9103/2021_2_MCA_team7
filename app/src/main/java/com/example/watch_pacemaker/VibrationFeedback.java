@@ -1,10 +1,12 @@
-package com.example.pacemaker;
+package com.example.watch_pacemaker;
+
 
 import static android.content.Context.VIBRATOR_SERVICE;
 
 import android.content.Context;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.util.Log;
 
 public class VibrationFeedback {
     Context context;
@@ -28,13 +30,16 @@ public class VibrationFeedback {
     public void feedback(int cadence) {
         if (cadence >= TOO_FAST_CADENCE) {
             vibrate(goSlowerPattern);
+            Log.i("Vibrator", "Go Slower");
         } else if (cadence <= TOO_SLOW_CADENCE) {
             vibrate(goFasterPattern);
+            Log.i("Vibrator", "Go Faster");
         }
     }
 
     public void vibrate(long[] pattern){
         vibrator.vibrate(VibrationEffect.createWaveform(pattern, repeat));
+
 
     }
 

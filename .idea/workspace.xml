@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="16b7dd2a-2813-41db-8388-c188cd3faa4a" name="Default Changelist" comment="">
+    <list default="true" id="16b7dd2a-2813-41db-8388-c188cd3faa4a" name="Default Changelist" comment="trying to  checkout feature 6">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android-source/.idea/deploymentTargetDropDown.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android-source/.idea/deploymentTargetDropDown.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android-source/app/src/main/java/com/example/watch_pacemaker/Stopwatch.java" beforeDir="false" afterPath="$PROJECT_DIR$/android-source/app/src/main/java/com/example/watch_pacemaker/Stopwatch.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,5 +62,9 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="trying to  checkout feature 6" />
+    <option name="LAST_COMMIT_MESSAGE" value="trying to  checkout feature 6" />
   </component>
 </project>

@@ -23,6 +23,15 @@ public class Stopwatch {
     HeartrateListener heartRateListener;
     VibrationFeedback vibrationFeedback;
 
+    int needCorrection = 0;
+    int targetCorrection = 0;
+    int correctionInterval = 5;
+
+    int ageidx = 1;
+    int[] age = {20, 25, 30, 35, 40, 45, 50, 55, 65, 70};
+    int[] hardcore = {160, 156, 152, 148, 144, 140,136, 132, 124, 120};
+    int[] fatburn = {120, 117, 114, 111, 108, 105, 102, 99, 93, 90};
+
 
     boolean running = false;
     private long pauseOffset;
@@ -90,6 +99,40 @@ public class Stopwatch {
         double cadence = cadenceListener.cadenceEstimator.getCadence();
         double heartRate = heartRateListener.getHeartRate();
         double pace = paceEstimator.getPace();
+
+        if (this.needCorrection == 0) {
+            // No need for correction
+            if (heartRate > hardcore[ageidx]) {
+                this.needCorrection = -1;
+                this.targetCorrection = (int) cadence - correctionInterval;
+            }
+            else if (heartRate < fatburn[ageidx]){
+                this.needCorrection = 1;
+                this.targetCorrection = (int) cadence + correctionInterval;
+            }
+
+        } else if (this.needCorrection == -1){
+            // Need correction
+            if (cadence > targetCorrection){
+                // Go slower alarm
+                vibrationFeedback.vibrate(vibrationFeedback.goSlowerPattern);
+            }
+            else {
+                this.needCorrection = 0;
+                this.targetCorrection = 0;
+            }
+        } else{
+            // Need correction
+            if (cadence < targetCorrection){
+                // Go faster alarm
+                vibrationFeedback.vibrate(vibrationFeedback.goFasterPattern);
+
+            }
+            else {
+                this.needCorrection = 0;
+                this.targetCorrection = 0;
+            }
+        }
 
         current_cadence.setText("Cadence: " + cadence);
         current_heart_rate.setText("Heart Rate: " + pace);

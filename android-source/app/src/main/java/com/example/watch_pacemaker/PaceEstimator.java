@@ -85,7 +85,6 @@ public class PaceEstimator implements LocationListener {
 
         //  getSpeed() 함수를 이용하여 속도를 계산
         double getSpeed = Double.parseDouble(String.format("%.3f", location.getSpeed()));
-        tvGetSpeed.setText("Speed: " + getSpeed);  //Get Speed
 
         // 위치 변경이 두번째로 변경된 경우 계산에 의해 속도 계산
         if(mLastlocation != null) {
@@ -95,6 +94,7 @@ public class PaceEstimator implements LocationListener {
             speed = mLastlocation.distanceTo(location) / deltaTime;
 
             double calSpeed = Double.parseDouble(String.format("%.3f", speed));
+            tvGetSpeed.setText("Speed: " + calSpeed);  //Calculated Speed
 
             interval.addLast(deltaTime);
             interval_distance.addLast((double) mLastlocation.distanceTo(location));

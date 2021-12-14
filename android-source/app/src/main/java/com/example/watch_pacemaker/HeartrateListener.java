@@ -45,6 +45,10 @@ public class HeartrateListener implements SensorEventListener{
 
     }
 
+    public double getHeartRate() {
+        return heartrate;
+    }
+
     public void startSensor() {
         sensorManager.registerListener(this, mHeartSensor, SensorManager.SENSOR_DELAY_NORMAL);
     }

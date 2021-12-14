@@ -50,7 +50,7 @@ public class MainActivity extends Activity {
         // Initializing Calculators and UI
         paceEstimator = new PaceEstimator(this, binding);
         vibrator = new VibrationFeedback(this);
-        stopwatch = new Stopwatch(this, binding, cadenceListener, paceEstimator, voiceFeedback, vibrator);
+        stopwatch = new Stopwatch(this, binding, cadenceListener, heartrateListener, paceEstimator, voiceFeedback, vibrator);
     }
 
     @Override

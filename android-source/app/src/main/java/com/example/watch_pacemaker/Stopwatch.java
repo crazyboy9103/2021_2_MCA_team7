@@ -19,7 +19,8 @@ public class Stopwatch {
     Chronometer chronometer;
     VoiceFeedback voice;
     PaceEstimator paceEstimator;
-    CadenceListener listener;
+    CadenceListener cadenceListener;
+    HeartrateListener heartRateListener;
     VibrationFeedback vibrationFeedback;
 
 
@@ -27,7 +28,7 @@ public class Stopwatch {
     private long pauseOffset;
 
     Button startButton, resetButton;
-    TextView current_pace, current_cadence;
+    TextView current_pace, current_cadence, current_heart_rate;
 
     private Handler mHandler;
     Runnable feedbackLoop;
@@ -36,7 +37,8 @@ public class Stopwatch {
 
     public Stopwatch(Context context,
                      ActivityMainBinding binding,
-                     CadenceListener listener,
+                     CadenceListener cadenceListener,
+                     HeartrateListener heartRateListener,
                      PaceEstimator paceEstimator,
                      VoiceFeedback voice,
                      VibrationFeedback vibrationFeedback
@@ -45,7 +47,8 @@ public class Stopwatch {
         this.binding = binding;
         this.voice = voice;
         this.paceEstimator = paceEstimator;
-        this.listener = listener;
+        this.cadenceListener = cadenceListener;
+        this.heartRateListener = heartRateListener;
         this.vibrationFeedback = vibrationFeedback;
 
         startButton = binding.startPauseButton;
@@ -53,6 +56,7 @@ public class Stopwatch {
         chronometer = binding.chronometer;
         current_pace = binding.tvPace;
         current_cadence = binding.tvDetectorExists;
+        current_heart_rate = binding.tvHeartRate;
 
 
 
@@ -83,10 +87,12 @@ public class Stopwatch {
     }
 
     protected void updateStatus() {
-        double cadence = listener.cadenceEstimator.getCadence();
+        double cadence = cadenceListener.cadenceEstimator.getCadence();
+        double heartRate = heartRateListener.getHeartRate();
         double pace = paceEstimator.getPace();
 
         current_cadence.setText("Cadence: " + cadence);
+        current_heart_rate.setText("Heart Rate: " + pace);
         voice.feedback(pace);
         vibrationFeedback.feedback((int)cadence);
     }
@@ -97,7 +103,7 @@ public class Stopwatch {
             chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
             chronometer.start();
             running = true;
-            listener.startSensor();
+            cadenceListener.startSensor();
             current_pace.setText("Speed: 0.0");
             feedbackLoop.run();
         }
@@ -108,7 +114,7 @@ public class Stopwatch {
             chronometer.stop();
             pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
             running = false;
-            listener.pauseSensor();
+            cadenceListener.pauseSensor();
 
             mHandler.removeCallbacks(feedbackLoop);
         }
@@ -117,7 +123,7 @@ public class Stopwatch {
     public void resetTimer(View v) {
         chronometer.setBase(SystemClock.elapsedRealtime());
         pauseOffset = 0;
-        listener.stepCount = 0;
+        cadenceListener.stepCount = 0;
 
         current_pace.setText("Speed: 0.0");
     }

@@ -32,7 +32,9 @@ public class Stopwatch {
 //    int[] hardcore = {160, 156, 152, 148, 144, 140,136, 132, 124, 120};
 //    int[] fatburn = {120, 117, 114, 111, 108, 105, 102, 99, 93, 90};
 
-    int count=0;
+    int count_cadence_feedback=0;
+    int count_vibration_feedback=0;
+    int count_voice_feedback=0;
 
     boolean running = false;
     private long pauseOffset;
@@ -44,7 +46,7 @@ public class Stopwatch {
     private Handler mHandler;
     Runnable feedbackLoop;
 
-    final private int mInterval = 5000;
+    final private int mInterval = 1000;
 
     public Stopwatch(Context context,
                      ActivityMainBinding binding,
@@ -137,24 +139,39 @@ public class Stopwatch {
 //                this.targetCorrection = 0;
 //            }
 //        }
-        if (count >= 12 && heartRate > 120) {
+        if (count_cadence_feedback >= 30 && heartRate > 120) {
             targetCorrection = vibrationFeedback.getTargetCadence() - correctionInterval;
             DetectorExists.setText("Cad target: " + targetCorrection + " (spm)");
             vibrationFeedback.setTargetCadence(targetCorrection);
-            count = 0;
+            count_cadence_feedback = 0;
         }
-        else if (count >= 12 && heartRate < 80){
+        else if (count_cadence_feedback >= 30 && heartRate < 80){
             targetCorrection = vibrationFeedback.getTargetCadence() + correctionInterval;
             DetectorExists.setText("Cad target: " + targetCorrection + " (spm)");
             vibrationFeedback.setTargetCadence(targetCorrection);
-            count = 0;
+            count_cadence_feedback = 0;
+        }
+        else if (count_cadence_feedback >= 30){
+            targetCorrection = vibrationFeedback.getTargetCadence();
+            DetectorExists.setText("Cad target: " + targetCorrection + " (spm)");
+            vibrationFeedback.setTargetCadence(targetCorrection);
+            count_cadence_feedback = 0;
         }
 
         current_cadence.setText("" + (int)cadence);
         current_heart_rate.setText("" + (int) heartRate);
-        voice.feedback(pace);
-        vibrationFeedback.feedback((int)cadence);
-        count ++;
+        if (count_voice_feedback >= 5) {
+            voice.feedback(pace);
+            count_voice_feedback=0;
+        }
+
+        if (count_vibration_feedback >= 5) {
+            vibrationFeedback.feedback((int) cadence);
+            count_vibration_feedback=0;
+        }
+        count_cadence_feedback ++;
+        count_vibration_feedback ++;
+        count_voice_feedback ++;
     }
 
 
@@ -187,6 +204,8 @@ public class Stopwatch {
         cadenceListener.stepCount = 0;
 
         current_pace.setText("0");
+        current_cadence.setText("0");
+        current_heart_rate.setText("0");
     }
 
     public void onToggleClicked(View view) {

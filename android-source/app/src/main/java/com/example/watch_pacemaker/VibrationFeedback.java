@@ -49,8 +49,6 @@ public class VibrationFeedback {
 
     public void vibrate(long[] pattern){
         vibrator.vibrate(VibrationEffect.createWaveform(pattern, repeat));
-
-
     }
 
     public void cancel(){

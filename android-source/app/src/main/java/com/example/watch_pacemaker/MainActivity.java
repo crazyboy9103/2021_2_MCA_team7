@@ -59,7 +59,6 @@ public class MainActivity extends Activity {
         if (!checkPermissions()) {
             requestPermissions();
         }
-
     }
 
     private boolean checkPermissions() {

@@ -13,7 +13,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:padding="@dimen/inner_frame_layout_padding"
         app:layout_boxedEdges="all">
 
         <TextView
@@ -21,42 +20,66 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Pacemaker App"
-            android:textSize="10sp" />
+            android:text="[Pacemaker App]"
+            android:textSize="9sp" />
 
         <TextView
-            android:id="@+id/tvHeartRate"
+            android:id="@+id/DetectorExists"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Heart Rate: 120"
-            android:textSize="10sp" />
+            android:layout_marginTop="5dp"
+            android:text="Cad target: 80 (spm)"
+            android:textSize="8sp"/>
 
         <TextView
             android:id="@+id/tvDetectorExists"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sensors Not Detected"
-            android:textSize="10sp"/>
+            android:text="INERTIAL Enabled: false"
+            android:textSize="8sp"/>
+
+        <TextView
+            android:id="@+id/HeartRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HR target: 100 (bpm)"
+            android:textSize="8sp" />
+
+        <TextView
+            android:id="@+id/tvHeartRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PPG Enabled: false"
+            android:textSize="8sp" />
+
+        <TextView
+            android:id="@+id/Pace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PACE target: 5 (km/h)"
+            android:textSize="8sp"/>
 
         <TextView
             android:id="@+id/tvPace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="PACE"
-            android:textSize="10sp"/>
+            android:text="GPS Enabled: false"
+            android:textSize="8sp"/>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/startPauseButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="5dp"
-                android:paddingEnd="5dp"
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp"
+                android:textSize="8sp"
                 android:layout_weight="1"
                 android:text="Start"
                 />
@@ -65,8 +88,9 @@
                 android:id="@+id/resetButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="5dp"
-                android:paddingEnd="5dp"
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp"
+                android:textSize="8sp"
                 android:layout_weight="1"
                 android:text="Reset" />
         </LinearLayout>
@@ -75,7 +99,7 @@
             android:id="@+id/chronometer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30sp"/>
+            android:textSize="15sp"/>
 
 
     </LinearLayout>

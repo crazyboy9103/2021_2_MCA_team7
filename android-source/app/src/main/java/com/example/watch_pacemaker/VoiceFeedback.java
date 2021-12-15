@@ -35,7 +35,7 @@ public class VoiceFeedback {
         TARGET_DISTANCE = target_distance; // 2 kilometers
         TARGET_TIME = target_time; // 1200seconds = 20 minutes
 
-        TARGET_PACE = (TARGET_DISTANCE * 1000) / (TARGET_TIME * 60); // 단위: m/sec
+        TARGET_PACE = (TARGET_DISTANCE / TARGET_TIME) * 60; // 단위: km/h
 
     }
 
@@ -45,10 +45,10 @@ public class VoiceFeedback {
             Log.i(TAG, wait_pace);
         }
         else{
-            if (pace >= TARGET_PACE * 1.15) {
+            if (pace >= TARGET_PACE * 1.2) {
                 play(decrease);
                 Log.i(TAG, goNarrowStep);
-            } else if (pace <= TARGET_PACE * 0.85) {
+            } else if (pace <= TARGET_PACE * 0.8) {
                 play(increase);
                 Log.i(TAG, goWideStep);
             }

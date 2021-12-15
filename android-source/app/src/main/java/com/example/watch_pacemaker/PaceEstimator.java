@@ -57,7 +57,7 @@ public class PaceEstimator implements LocationListener {
         }
         // GPS 사용 가능 여부 확인
         boolean isEnable = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        tvGetSpeed.setText("GPS: " + isEnable);  //GPS Enable
+        tvGetSpeed.setText("GPS Enabled: " + isEnable);  //GPS Enable
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000,0, this);
     }
 
@@ -94,7 +94,8 @@ public class PaceEstimator implements LocationListener {
             speed = mLastlocation.distanceTo(location) / deltaTime;
 
             double calSpeed = Double.parseDouble(String.format("%.3f", speed));
-            tvGetSpeed.setText("Speed: " + calSpeed);  //Calculated Speed
+            calSpeed = calSpeed * 3600 / 1000;  // m/s --> km/h
+            tvGetSpeed.setText(""+calSpeed);  //Calculated Speed
 
             interval.addLast(deltaTime);
             interval_distance.addLast((double) mLastlocation.distanceTo(location));

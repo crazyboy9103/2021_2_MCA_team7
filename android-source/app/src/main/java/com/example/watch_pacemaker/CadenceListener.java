@@ -43,10 +43,10 @@ public class CadenceListener implements SensorEventListener {
         sensorManager = (SensorManager) context.getSystemService(SENSOR_SERVICE);
         if (sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR) != null) {
             mStepDetector = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
-            textDetectorExists.setText("Sensors Detected");
+            textDetectorExists.setText("INERTIAL Enabled: true"); // Inertial sensor enabled
             Log.i("Steprate Listener", "Found");
         } else {
-            textDetectorExists.setText("Sensors not detected");
+            textDetectorExists.setText("INERTIAL Enabled: false");
             Log.i("Steprate Listener", "Not found");
         }
 

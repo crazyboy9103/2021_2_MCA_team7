@@ -8,6 +8,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.example.watch_pacemaker.databinding.ActivityMainBinding;
 
@@ -16,6 +17,7 @@ public class HeartrateListener implements SensorEventListener{
     ActivityMainBinding binding;
     SensorManager sensorManager;
     Sensor mHeartSensor;
+    private TextView tvHeartRate;
 
     private double heartrate;
 
@@ -23,11 +25,15 @@ public class HeartrateListener implements SensorEventListener{
         this.context = context;
         this.binding = binding;
 
+        tvHeartRate = binding.tvHeartRate;
+
         sensorManager = (SensorManager) context.getSystemService(SENSOR_SERVICE);
         if (sensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE) != null) {
+            tvHeartRate.setText("PPG Enabled: true");  //PPG Enable
             Log.i("Heartrate Sensor", "Found");
             mHeartSensor = sensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE);
         } else {
+            tvHeartRate.setText("PPG Enabled: false");  //PPG Enable
             Log.i("Heartrate Sensor", "Not found");
         }
     }

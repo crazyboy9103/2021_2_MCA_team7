@@ -46,7 +46,7 @@ public class MainActivity extends Activity {
         collectingData = MediaPlayer.create(this, R.raw.wait);
 
         voiceFeedback = new VoiceFeedback(this, increasePace, decreasePace, collectingData,
-                                            2.0, 12.0);
+                                            5.0, 60.0);
         // Initializing Calculators and UI
         paceEstimator = new PaceEstimator(this, binding);
         vibrator = new VibrationFeedback(this);

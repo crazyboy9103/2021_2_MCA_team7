@@ -16,10 +16,10 @@ public class VibrationFeedback {
     final long[] goSlowerPattern = new long[] {500,1000};
     final int repeat = -1;
 
-    final static int OPTIMAL_CADENCE = 180;
-    final static int CADENCE_MARGIN = 5;
-    final static int TOO_FAST_CADENCE = OPTIMAL_CADENCE + CADENCE_MARGIN;
-    final static int TOO_SLOW_CADENCE = OPTIMAL_CADENCE - CADENCE_MARGIN;
+    public int OPTIMAL_CADENCE = 80;
+    public int CADENCE_MARGIN = 20;
+    public int TOO_FAST_CADENCE = OPTIMAL_CADENCE + CADENCE_MARGIN;
+    public int TOO_SLOW_CADENCE = OPTIMAL_CADENCE - CADENCE_MARGIN;
 
     public VibrationFeedback(Context context){
         this.context = context;
@@ -35,6 +35,16 @@ public class VibrationFeedback {
             vibrate(goFasterPattern);
             Log.i("Vibrator", "Go Faster");
         }
+    }
+
+    public void setTargetCadence(int cadence) {
+        OPTIMAL_CADENCE = cadence;
+        TOO_FAST_CADENCE = OPTIMAL_CADENCE + CADENCE_MARGIN;
+        TOO_SLOW_CADENCE = OPTIMAL_CADENCE - CADENCE_MARGIN;
+    }
+
+    public int getTargetCadence() {
+        return OPTIMAL_CADENCE;
     }
 
     public void vibrate(long[] pattern){

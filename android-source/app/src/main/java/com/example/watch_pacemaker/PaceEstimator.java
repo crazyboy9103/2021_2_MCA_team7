@@ -57,7 +57,7 @@ public class PaceEstimator implements LocationListener {
         }
         // GPS 사용 가능 여부 확인
         boolean isEnable = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        //tvGpsEnable.setText(": " + isEnable);  //GPS Enable
+        tvGetSpeed.setText("GPS: " + isEnable);  //GPS Enable
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000,0, this);
     }
 

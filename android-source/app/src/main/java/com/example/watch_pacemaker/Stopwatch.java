@@ -134,8 +134,8 @@ public class Stopwatch {
             }
         }
 
-        current_cadence.setText("Cadence: " + cadence);
-        current_heart_rate.setText("Heart Rate: " + pace);
+        current_cadence.setText("Cadence: " + (int)cadence);
+        current_heart_rate.setText("Heart Rate: " + (int) heartRate);
         voice.feedback(pace);
         vibrationFeedback.feedback((int)cadence);
     }
@@ -147,6 +147,7 @@ public class Stopwatch {
             chronometer.start();
             running = true;
             cadenceListener.startSensor();
+            heartRateListener.startSensor();
             current_pace.setText("Speed: 0.0");
             feedbackLoop.run();
         }

@@ -39,20 +39,6 @@
             android:textSize="8sp"/>
 
         <TextView
-            android:id="@+id/HeartRate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="HR target: 100 (bpm)"
-            android:textSize="8sp" />
-
-        <TextView
-            android:id="@+id/tvHeartRate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="PPG Enabled: false"
-            android:textSize="8sp" />
-
-        <TextView
             android:id="@+id/Pace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -66,6 +52,19 @@
             android:text="GPS Enabled: false"
             android:textSize="8sp"/>
 
+        <TextView
+            android:id="@+id/HeartRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HR target: 100 (bpm)"
+            android:textSize="8sp" />
+
+        <TextView
+            android:id="@+id/tvHeartRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PPG Enabled: false"
+            android:textSize="8sp" />
 
 
         <LinearLayout

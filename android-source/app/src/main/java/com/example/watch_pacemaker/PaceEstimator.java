@@ -62,15 +62,18 @@ public class PaceEstimator implements LocationListener {
     }
 
     public double getPace(){
-        if(interval.size() < 10 || interval_distance.size()<10){
+        if(interval.size() < 5 || interval_distance.size()<5){
             return -1;
         }
         else{
-            for(int i = 0 ; i<10; i++) {
+            for(int i = 0 ; i<5; i++) {
                 total_interval += interval.get(i);
                 total_interval_distance += interval_distance.get(i);
             }
             pace = total_interval_distance / total_interval;
+            pace = pace * 3600 / 1000;  // m/s --> km/h
+            tvGetSpeed.setText(""+pace);  //Calculated Pace
+
             total_interval = 0;
             total_interval_distance = 0;
             return Math.max(pace, 0);
@@ -93,17 +96,17 @@ public class PaceEstimator implements LocationListener {
             // 속도 계산
             speed = mLastlocation.distanceTo(location) / deltaTime;
 
-            double calSpeed = Double.parseDouble(String.format("%.3f", speed));
-            calSpeed = calSpeed * 3600 / 1000;  // m/s --> km/h
-            tvGetSpeed.setText(""+calSpeed);  //Calculated Speed
+//            double calSpeed = Double.parseDouble(String.format("%.3f", speed));
+//            calSpeed = calSpeed * 3600 / 1000;  // m/s --> km/h
+//            tvGetSpeed.setText(""+calSpeed);  //Calculated Speed
 
             interval.addLast(deltaTime);
             interval_distance.addLast((double) mLastlocation.distanceTo(location));
 
-            if(interval.size() > 10){
+            if(interval.size() > 5){
                 interval.removeFirst();
             }
-            if(interval_distance.size() > 10){
+            if(interval_distance.size() > 5){
                 interval_distance.removeFirst();
             }
         }

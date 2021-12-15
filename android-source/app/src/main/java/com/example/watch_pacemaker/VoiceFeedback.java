@@ -18,9 +18,9 @@ public class VoiceFeedback {
     final String wait_pace = "Wait until collecting 10 samples";
 
 
-    private double TARGET_DISTANCE=10;
-    private double TARGET_TIME=60;
-    private double TARGET_PACE;
+//    private double TARGET_DISTANCE=10;
+//    private double TARGET_TIME=60;
+    public double TARGET_PACE;
 
     private TextView target_pace;
 
@@ -32,23 +32,24 @@ public class VoiceFeedback {
         this.decrease = decrease;
         this.wait = wait;
 
-        TARGET_DISTANCE = target_distance; // 2 kilometers
-        TARGET_TIME = target_time; // 1200seconds = 20 minutes
+//        TARGET_DISTANCE = target_distance; // 2 kilometers
+//        TARGET_TIME = target_time; // 1200seconds = 20 minutes
 
-        TARGET_PACE = (TARGET_DISTANCE / TARGET_TIME) * 60; // 단위: km/h
+//        TARGET_PACE = target_distance / (target_time * 60) ; // 단위: km/h
+        TARGET_PACE = 5;
 
     }
 
     public void feedback(double pace) {
         if (pace == -1){
-            play(wait);
+//            play(wait);
             Log.i(TAG, wait_pace);
         }
         else{
-            if (pace >= TARGET_PACE * 1.2) {
+            if (pace >= 5.5) {
                 play(decrease);
                 Log.i(TAG, goNarrowStep);
-            } else if (pace <= TARGET_PACE * 0.8) {
+            } else if (pace <= 4.5) {
                 play(increase);
                 Log.i(TAG, goWideStep);
             }
